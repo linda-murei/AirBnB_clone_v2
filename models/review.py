@@ -1,24 +1,29 @@
 #!/usr/bin/python3
-"""This is a Review class."""
-from sqlalchemy import Column, ForeignKey, String
-from sqlalchemy.orm import relationship
-
-from models.base_model import Base, BaseModel
+""" Review module for the HBNB project """
+from models.base_model import BaseModel, Base
+# SQLAlchemy modules
+from sqlalchemy import Column, String, ForeignKey, Integer, Float
 
 
 class Review(BaseModel, Base):
-    """shows a review for a MySQL database.
-
-    Inherits from SQLAlchemy Base and links to the MySQL table reviews.
+    """ Defines a class Review
 
     Attributes:
-        __tablename__ (str): the MySQL table to store Reviews.
-        text (sqlalchemy String): review description.
-        place_id (sqlalchemy String): review's place id.
-        user_id (sqlalchemy String): review's user id.
-    """
+        __tablename__ (str): reviews
 
-    __tablename__ = "reviews"
+        place_id (string): id of place.
+        user_id (string): id of user.
+        text (string): just a text.
+    """
+    __tablename__ = 'reviews'
+    place_id = Column(String(60), ForeignKey('places.id'), nullable=False)
+    user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
     text = Column(String(1024), nullable=False)
-    place_id = Column(String(60), ForeignKey("places.id"), nullable=False)
-    user_id = Column(String(60), ForeignKey("users.id"), nullable=False)
+
+    def __init__(self, *args, **kwargs):
+        """initializes state"""
+        super().__init__(*args, **kwargs)
+
+    # place_id = ""
+    # user_id = ""
+    # text = ""
