@@ -1,26 +1,24 @@
 #!/usr/bin/python3
-'''
-    Define the class City.
-'''
-from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, ForeignKey
+"""This is the City class."""
+
+from sqlalchemy import Column, ForeignKey, String
 from sqlalchemy.orm import relationship
-from os import getenv
 
-
-storage_type = getenv("HBNB_TYPE_STORAGE")
+from models.base_model import Base, BaseModel
 
 
 class City(BaseModel, Base):
-    '''
-        Define the class City that inherits from BaseModel.
-    '''
-    __tablename__ = 'cities'
-    if storage_type == 'db':
-        name = Column(String(128), nullable=False)
-        state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
-        places = relationship("Place", backref="cities",
-                              cascade="all, delete-orphan")
-    else:
-        name = ""
-        state_id = ""
+    """shows a city for a MySQL database.
+
+    Inherits from SQLAlchemy Base and links to the MySQL table cities.
+
+    Attributes:
+        __tablename__ (str): the MySQL table to store Cities.
+        name (sqlalchemy String): the City.
+        state_id (sqlalchemy String): The state id of the City.
+    """
+
+    __tablename__ = "cities"
+    name = Column(String(128), nullable=False)
+    state_id = Column(String(60), ForeignKey("states.id"), nullable=False)
+    places = relationship("Place", backref="cities", cascade="delete")
