@@ -1,6 +1,5 @@
 #!/usr/bin/puppet apply
-# Script that redoes task 0 (sets up your web servers for the deployment of web_static)
-
+# AirBnB clone web server setup and configuration
 exec { 'apt-get-update':
   command => '/usr/bin/apt-get update',
   path    => '/usr/bin:/usr/sbin:/bin',
